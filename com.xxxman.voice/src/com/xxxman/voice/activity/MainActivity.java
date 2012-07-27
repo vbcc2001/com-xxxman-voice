@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
         for(int i=0;i<300;i++)  
         {  
             HashMap<String, String> map = new HashMap<String, String>();  
-            map.put("title", "This is Title....."+i);  
+            map.put("title", "This is Title....."+i+"------------122");  
             map.put("ItemText", "20100102:"+i);  
             list.add(map);  
         }  
