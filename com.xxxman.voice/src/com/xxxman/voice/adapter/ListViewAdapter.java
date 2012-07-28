@@ -49,7 +49,8 @@ public class ListViewAdapter extends BaseAdapter  {
 		}else {
 			view=(LinearLayout) convertView;
 		}
-		TextView textView=(TextView) view.findViewById(R.id.title);	
+		TextView textView=(TextView) view.findViewById(R.id.title_list_item_title);	
+		@SuppressWarnings("unchecked")
 		HashMap<String, String> item = (HashMap<String, String>)getItem(position);
 		textView.setText(item.get("title"));
 		return view;
