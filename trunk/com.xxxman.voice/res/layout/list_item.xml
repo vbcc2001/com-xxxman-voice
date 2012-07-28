@@ -29,8 +29,10 @@
 			        android:singleLine="true"
 			        android:ellipsize="marquee"
 			        android:textStyle="bold"
+			        android:paddingRight="10dp"
 			        android:gravity="left|center_vertical"	
-			        android:text="@string/title_list_item_title" />
+			        android:text="@string/title_list_item_title" 
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 			    <TextView
 			        android:id="@+id/title_list_item_type"
