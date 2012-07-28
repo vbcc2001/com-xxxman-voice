@@ -3,6 +3,10 @@ package com.xxxman.voice.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.xxxman.voice.R;
 import com.xxxman.voice.adapter.ListViewAdapter;
 
@@ -16,29 +20,59 @@ import android.widget.ListView;
  *
  */
 public class MainActivity extends Activity {
-
+	
+    private String title=null;
+    private ListView listView=null;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView listView = (ListView) findViewById(R.id.listView);
-        ListViewAdapter adapter = new ListViewAdapter();
-        //adapter.
+        listView = (ListView) findViewById(R.id.listView);
+        
+        ParseObject voiceObject = new ParseObject("VoiceObject");
+
+        
+    }
+    /**
+     * 数据初始化
+     */
+    public void init(){
+    	
+        ParseQuery query = new ParseQuery("GameScore");
+        query.getInBackground("A10CCWqumk", new GetCallback() {
+        	@Override
+        	public void done(ParseObject object, ParseException e) {
+	            if (e == null) {
+	    			setData(object);
+	            } else {
+	            	e.printStackTrace();
+	            }
+        	}
+        });
+
+    }
+    /**
+     * 将数据填充到视图中
+     * @param object
+     */
+    public void setData(ParseObject object){
+    	if(object!=null){
+    		title = object.getString("playerName");
+    	}        
+    	ListViewAdapter adapter = new ListViewAdapter();
         //生成动态数组，并且转载数据  
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();  
-        for(int i=0;i<300;i++)  
+        for(int i=0;i<300;i++)
         {  
             HashMap<String, String> map = new HashMap<String, String>();  
-            map.put("title", "This is Title....."+i+"------------122");  
-            map.put("ItemText", "20100102:"+i);  
+            map.put("title", title);   
             list.add(map);  
         }  
         adapter.setDataList(list);
         adapter.setContext(this);
         listView.setAdapter(adapter);
     }
-
-
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
