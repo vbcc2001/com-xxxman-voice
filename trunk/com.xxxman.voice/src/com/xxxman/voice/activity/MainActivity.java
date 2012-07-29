@@ -12,6 +12,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.xxxman.voice.R;
 import com.xxxman.voice.adapter.ListViewAdapter;
+import com.xxxman.voice.helper.VoiceObjectHelper;
 import com.xxxman.voice.object.VoiceObject;
 
 import android.os.Bundle;
@@ -37,7 +38,8 @@ public class MainActivity extends Activity {
         VoiceObject vo = new VoiceObject();
         vo.setUri("http://fmn012.xnimg.cn/fmn012/tribe/20080922/16/28/A209620258381PEP.mp3");
         vo.setTitle("Ã˝∫£"+new Date().getTime());
-        vo.saveInBackground();
+        vo.setType("“Ù¿÷");
+        vo.getParseObject().saveInBackground();
         
         init();
         
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void done(List<ParseObject> list, ParseException e) {
 	            if (e == null) {
-	    			setData(VoiceObject.getVoiceObject(list));
+	    			setData(VoiceObjectHelper.getVoiceObject(list));
 	            } else {
 	            	e.printStackTrace();
 	            }				
