@@ -2,8 +2,10 @@ package com.xxxman.voice.adapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.xxxman.voice.R;
+import com.xxxman.voice.object.VoiceObject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 public class ListViewAdapter extends BaseAdapter  {
 
 
-	private ArrayList<HashMap<String, String>> dataList ;
+	private List<VoiceObject> dataList ;
 	private Context context ;
 
 	/**
@@ -31,7 +33,7 @@ public class ListViewAdapter extends BaseAdapter  {
 	}
 
 	public Object getItem(int position) {
-		HashMap<String, String> item = dataList.get(position);
+		VoiceObject item = dataList.get(position);
 		return item;
 	}
 
@@ -49,18 +51,19 @@ public class ListViewAdapter extends BaseAdapter  {
 		}else {
 			view=(LinearLayout) convertView;
 		}
-		TextView textView=(TextView) view.findViewById(R.id.title_list_item_title);	
-		@SuppressWarnings("unchecked")
-		HashMap<String, String> item = (HashMap<String, String>)getItem(position);
-		textView.setText(item.get("title"));
+		VoiceObject item = (VoiceObject)getItem(position);
+		TextView title_list_item_title=(TextView) view.findViewById(R.id.title_list_item_title);	
+		TextView title_list_item_date=(TextView) view.findViewById(R.id.title_list_item_date);			
+		title_list_item_title.setText(item.getTitle());
+		title_list_item_date.setText(item.getCreateDateString());
 		return view;
 	}
 
-	public ArrayList<HashMap<String, String>> getDataList() {
+	public List<VoiceObject> getDataList() {
 		return dataList;
 	}
 
-	public void setDataList(ArrayList<HashMap<String, String>> dataList) {
+	public void setDataList(List<VoiceObject> dataList) {
 		this.dataList = dataList;
 	}
 	
