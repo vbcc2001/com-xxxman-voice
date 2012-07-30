@@ -5,9 +5,12 @@ import java.util.List;
 import com.xxxman.voice.R;
 import com.xxxman.voice.activity.VoicePlayerActivity;
 import com.xxxman.voice.object.VoiceObject;
+import com.xxxman.voice.service.VoiceStreamingService;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +28,18 @@ public class ListViewAdapter extends BaseAdapter  {
 
 	private List<VoiceObject> dataList ;
 	private Context context ;
+	private VoiceObject item;
 
+	/**
+	 * 构造函数,传入context 和 数据list
+	 * @param context
+	 * @param list
+	 */
+	public ListViewAdapter(Context context,List<VoiceObject> list){
+		super();
+		this.dataList = list;
+		this.context = context;	
+	}
 	/**
 	 * 获得数量
 	 */
@@ -53,7 +67,7 @@ public class ListViewAdapter extends BaseAdapter  {
 			view=(LinearLayout) convertView;
 		}
 		//设置标题,分类,点击数,更新日期
-		VoiceObject item = (VoiceObject)getItem(position);
+		item = (VoiceObject)getItem(position);
 		TextView title_list_item_title=(TextView) view.findViewById(R.id.title_list_item_title);
 		TextView title_list_item_type=(TextView) view.findViewById(R.id.title_list_item_type);	
 		TextView title_list_item_checked=(TextView) view.findViewById(R.id.title_list_item_checked);	
@@ -65,9 +79,12 @@ public class ListViewAdapter extends BaseAdapter  {
 		view.setTag(item.getParseObject().getObjectId());
 		view.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent();
-			    intent.setClass(context, VoicePlayerActivity.class); 
-			    context.startActivity(intent);
+			    Bundle bundle = new Bundle();
+			    bundle.putString("uri", item.getUri());
+			    bundle.putString("title",item.getTitle());
+			    Intent intent = new Intent(context,VoiceStreamingService.class);
+			    intent.putExtras(bundle);
+			    context.startService(intent);
 			}
 			  });
 		return view;
