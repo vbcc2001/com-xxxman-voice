@@ -5,6 +5,8 @@ import java.util.List;
 import com.xxxman.voice.R;
 import com.xxxman.voice.activity.VoicePlayerActivity;
 import com.xxxman.voice.object.VoiceObject;
+import com.xxxman.voice.parse.ParseApplication;
+import com.xxxman.voice.service.VoicePlayerService;
 import com.xxxman.voice.service.VoiceStreamingService;
 
 import android.app.Activity;
@@ -20,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 /**
  * ListView¡–±Ì  ≈‰∆˜
- * @author kkkaiser
+ * @author xxxman
  *
  */
 public class ListViewAdapter extends BaseAdapter  {
@@ -76,17 +78,18 @@ public class ListViewAdapter extends BaseAdapter  {
 		title_list_item_type.setText(context.getString(R.string.title_list_item_type_left_half)+item.getType()+context.getString(R.string.title_list_item_type_right_harf));
 		title_list_item_checked.setText(context.getString(R.string.title_list_item_checked)+item.getCheckedCount());
 		title_list_item_date.setText(context.getString(R.string.title_list_item_date)+item.getCreateDateString());
-		view.setTag(item.getParseObject().getObjectId());
-		view.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-			    Bundle bundle = new Bundle();
-			    bundle.putString("uri", item.getUri());
-			    bundle.putString("title",item.getTitle());
-			    Intent intent = new Intent(context,VoiceStreamingService.class);
-			    intent.putExtras(bundle);
-			    context.startService(intent);
-			}
-			  });
+		view.setTag(position);
+//		view.setOnClickListener(new OnClickListener() {
+//			public void onClick(View v) {
+//				ParseApplication a= (ParseApplication)context.getApplicationContext();
+//				a.getVoiceObjectList().add(item);
+//				a.setCurrentNumber(a.getVoiceObjectList().size());
+////			    Bundle bundle = new Bundle();
+//			    Intent intent = new Intent(context,VoicePlayerService.class);
+////			    intent.putExtras(bundle);
+//			    context.startService(intent);
+//			}
+//		});
 		return view;
 	}
 

@@ -25,12 +25,8 @@
         <activity
             android:name=".activity.VoicePlayerActivity"
             android:label="@string/title_activity_voice_player" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <service android:name=".service.VoicePlayerService" />
     </application>
 
 </manifest>
