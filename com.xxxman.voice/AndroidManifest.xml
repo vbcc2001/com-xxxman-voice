@@ -26,7 +26,11 @@
             android:name=".activity.VoicePlayerActivity"
             android:label="@string/title_activity_voice_player" >
         </activity>
-        <service android:name=".service.VoicePlayerService" />
+        <service android:name=".service.VoicePlayerService" android:exported="false" >
+			<intent-filter> 
+                <action android:name ="VoicePlayerService" /> 
+            </intent-filter >
+		</service>
     </application>
 
 </manifest>
