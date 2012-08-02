@@ -7,6 +7,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 import com.xxxman.voice.R;
 import com.xxxman.voice.adapter.ListViewAdapter;
 import com.xxxman.voice.helper.VoiceObjectHelper;
@@ -74,13 +76,13 @@ public class MainActivity extends Activity  {
 				task.execute(position);
 			}
         });
-   
+        
         VoiceObject vo = new VoiceObject();
-        //vo.setUri("http://mp3.mwap8.com/destdir/Music/2009/20090601/ZuiXuanMinZuFeng20090601119.mp3");
-        //vo.setTitle("不知道"+new Date().getTime());
-        String url = "http://excerpts.contentreserve.com/FormatType-425/0017-1/172247-Sail.mp3";
-        vo.setUri(url);
-        vo.setTitle("sail"+new Date().getTime());        
+        vo.setUri("http://mp3.mwap8.com/destdir/Music/2009/20090601/ZuiXuanMinZuFeng20090601119.mp3");
+        vo.setTitle("最炫民族风"+new Date().getTime());
+//        String url = "http://excerpts.contentreserve.com/FormatType-425/0017-1/172247-Sail.mp3";
+//        vo.setUri(url);
+//        vo.setTitle("sail"+new Date().getTime());        
         vo.setType("音乐");
         vo.getParseObject().saveInBackground();
         
