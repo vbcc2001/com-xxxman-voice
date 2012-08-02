@@ -7,32 +7,28 @@ import java.util.Map;
 import java.util.Set;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 /**
- * 声音对象的实体类
- * @author xxxman 20120729
+ * 用户对象的实体类
+ * @author xxxman 20120802
  *
  */
 @SuppressWarnings("rawtypes")
-public class VoiceObject  implements Map<String,Object> {
+public class UserObject  implements Map<String,Object> {
 
-	private ParseObject parseObject ;
+	private ParseUser parseObject ;
 	/**
-	 * 默认方法：
-	 * parseObject 对象为 new ParseObject("VoiceObject");
-	 * 
+	 * 默认构造方法：
+	 * super("VoiceObject");
 	 */
-	public VoiceObject() {
-		parseObject = new ParseObject("VoiceObject");
-		this.setTitle("未知");
-		this.setCheckedCount(0);
-		this.setUri("https://www.google.com");
-		this.setType("未知");
+	public UserObject() {
+		parseObject = new ParseUser();
 	}
 	/**
-	 * 通过parseObject构造：
-	 * 
+	 * 通过ParseUser构造方法：
+	 * super("VoiceObject");
 	 */
-	public VoiceObject(ParseObject parseObject) {
+	public UserObject(ParseUser parseObject) {
 		this.parseObject =parseObject ;
 	}	
 	/**
@@ -140,57 +136,23 @@ public class VoiceObject  implements Map<String,Object> {
 		return parseObject.keySet();
 	}
 	/**
-	 * 连接地址
-	 * @return 连接地址
+	 * 用户名
+	 * @return 用户名
 	 */
-	public String getUri() {
-		return parseObject.getString("uri");
+	public String getUserName() {
+		return parseObject.getUsername();
 	}
 	/**
-	 * 连接地址
+	 * 用户名
 	 */
-	public void setUri(String uri) {
-		parseObject.put("uri", uri);
+	public void setUserName(String userName) {
+		parseObject.put("uri", userName);
 	}
 	/**
-	 * 标题
-	 * @return 标题
+	 * 密码
 	 */
-	public String getTitle() {
-		return parseObject.getString("title");
-	}
-	/**
-	 * 标题
-	 */
-	public void setTitle(String title) {
-		parseObject.put("title", title);
-	}
-	/**
-	 * 点击量
-	 * @return 点击量
-	 */
-	public int getCheckedCount() {
-		return parseObject.getInt("checkedCount");
-	}
-	/**
-	 * 点击量
-	 */
-	public void setCheckedCount(int checkedCount) {
-		parseObject.put("checkedCount", checkedCount);
-	}
-	/**
-	 * 分类
-	 * @return
-	 */
-	public String getType() {
-		return parseObject.getString("type");
-	}
-	/**
-	 * 分类
-	 * @return
-	 */
-	public void setType(String type) {
-		parseObject.put("type", type);
+	public void setPassword(String password) {
+		parseObject.setPassword(password);
 	}
 	/**
 	 * 创建日期
@@ -208,14 +170,14 @@ public class VoiceObject  implements Map<String,Object> {
 		return sdf.format(parseObject.getCreatedAt());
 	}
 	/**
-	 * paresObject 转换为 voiceObject
+	 * paresObject 转换为 UserObject
 	 * @param parseObject
 	 */
-	public void setParseObject(ParseObject parseObject){
+	public void setParseObject(ParseUser parseObject){
 		this.parseObject = parseObject;
 	}
 	/**
-	 * voiceObject 转换为  paresObject 
+	 * UserObject 转换为  paresObject 
 	 * @param 
 	 * @return  ParseObject
 	 */

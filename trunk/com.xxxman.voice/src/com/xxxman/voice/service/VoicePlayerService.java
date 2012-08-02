@@ -20,8 +20,8 @@ import android.os.IBinder;
 public class VoicePlayerService extends Service{
 	
 	private List<VoiceObject> voiceObjectList ;
-	private MediaPlayer mediaPlayer = new MediaPlayer(); ;
-	private int i = 0;
+	private MediaPlayer mediaPlayer = new MediaPlayer();
+	private int i = 0 ;
 	private VBinder vBinder = new VBinder();
 	@Override
 	public IBinder onBind(Intent intent) {
