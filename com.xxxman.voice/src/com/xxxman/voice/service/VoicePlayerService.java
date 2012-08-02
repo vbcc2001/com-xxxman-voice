@@ -70,4 +70,11 @@ public class VoicePlayerService extends Service{
 	public void stop(){
 		mediaPlayer.stop();
 	}
+	/**
+	 * 获得当前播放的VoiceObject
+	 * @return
+	 */
+	public VoiceObject getCurrentVoiceObject(){
+		return null;
+	}
 }
