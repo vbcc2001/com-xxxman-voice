@@ -15,7 +15,12 @@ public class VoicePlayAsyncTask extends AsyncTask<Integer, Integer, String> {
 	private ParseApplication app;
 	private VoicePlayerService voicePlayerService ;
 	private VoiceObject voiceObject ;
-	
+	public VoicePlayAsyncTask(VoicePlayerService voicePlayerService, VoiceObject voiceObject ){
+		super();
+		this.voiceObject=voiceObject;
+		this.voicePlayerService=voicePlayerService;
+		
+	}
     @Override  
     protected void onPreExecute() {  
         super.onPreExecute();  
@@ -23,10 +28,7 @@ public class VoicePlayAsyncTask extends AsyncTask<Integer, Integer, String> {
 	@Override
 	protected String doInBackground(Integer... params) {
 		// TODO Auto-generated method stub
-		int position = params[0];
-//		ParseApplication app =(ParseApplication) getApplication();
-		app.getVoiceObjectList().add(voiceObject);
-		app.setCurrentNumber(app.getVoiceObjectList().size());
+		//int position = params[0];
 		voicePlayerService.newPlay(voiceObject);
 		publishProgress(4); //执行过程中交换
 		

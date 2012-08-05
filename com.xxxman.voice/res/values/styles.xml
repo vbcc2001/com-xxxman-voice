@@ -1,5 +1,5 @@
 <resources>
-
-    <style name="AppTheme" parent="android:Theme.Light" />
-
+	<style name="voice_theme" parent="android:Theme">
+		<item name="android:windowTitleSize">40dp</item>
+	</style>
 </resources>

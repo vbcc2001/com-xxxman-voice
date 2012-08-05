@@ -65,10 +65,30 @@ public class VoicePlayerService extends Service{
 		}
 	}
 	/**
+	 * 播放
+	 */
+	public void start(){
+		mediaPlayer.start();
+	}	
+	/**
 	 * 停止播放
 	 */
 	public void stop(){
 		mediaPlayer.stop();
+	}
+	
+	/**
+	 * 暂停播放
+	 */
+	public void pause(){
+		mediaPlayer.pause();
+	}
+	/**
+	 * 是否播放中
+	 * @return
+	 */
+	public boolean isPlaying() {
+		return mediaPlayer.isPlaying();
 	}
 	/**
 	 * 获得当前播放的VoiceObject

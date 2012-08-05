@@ -10,20 +10,18 @@ import com.xxxman.voice.service.VoiceStreamingService;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.Window;
 
 public class VoicePlayerActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final boolean isCustom = requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_voice_player);
-//        VoiceStreamingService vsService = new VoiceStreamingService(this);
-//        try {
-//			vsService.startStreaming("http://mp3.mwap8.com/destdir/Music/2009/20090601/ZuiXuanMinZuFeng20090601119.mp3");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+        Window mWindow = getWindow();
+        mWindow.setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.titlebar);
+
     }
 
     @Override
