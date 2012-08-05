@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.xxxman.voice.R;
 import com.xxxman.voice.adapter.ListViewAdapter;
+import com.xxxman.voice.asyncTask.VoicePlayAsyncTask;
 import com.xxxman.voice.helper.VoiceObjectHelper;
 import com.xxxman.voice.object.VoiceObject;
 import com.xxxman.voice.parse.ParseApplication;
@@ -24,8 +25,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 /**
  * 主界面
@@ -42,6 +45,9 @@ public class MainActivity extends Activity  {
     //声音播放器服务
     private VoicePlayerService voicePlayerService = null;
     //主视图和声音播放器服务通讯实现类
+    private ParseApplication app = null ;
+    //当前播放的Item的imageView
+    private ImageView playingImageView = null;
 	private ServiceConnection serviceConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -57,20 +63,52 @@ public class MainActivity extends Activity  {
      */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置窗体属性:自定义标题属性
+        final boolean isCustom = requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_main);
+        //自定义标题栏
+        Window window = getWindow();
+        if(isCustom){
+        	window.setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.titlebar);
+        }
+        app = (ParseApplication) getApplication();
         //获得主视图上的列表视图
         listView = (ListView) findViewById(R.id.listView);
         /*
          * 设置列表视图每列的单击监听:
          * 1 点击后,将声音对象放到全局播放类表中,
          * 2 设定为当前播放编号设置为最后的声音对象,
-         * 3 播放声音对象
+         * 3 通过异步任务播放声音对象
          */     
         listView.setOnItemClickListener(new OnItemClickListener(){
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				VoicePlayAsyncTask task = new VoicePlayAsyncTask();
-				task.execute(position);
+				VoiceObject voiceObject = voiceObjectlist.get(position);
+				app.getVoiceObjectList().add(voiceObject);
+				//当对象不是当前播放的声音对象时候
+				if(voiceObject.equals(app.getNowPlayingVoiceObject())){
+					if(voicePlayerService.isPlaying()){
+						voicePlayerService.pause();
+						ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
+						imageView.setImageResource(R.drawable.pause);
+					}else {
+						voicePlayerService.start();
+						ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
+						imageView.setImageResource(R.drawable.playing);						
+					}
+				}else{
+					app.setNowPlayingVoiceObject(voiceObject);
+					VoicePlayAsyncTask task = new VoicePlayAsyncTask(voicePlayerService,voiceObject);
+					task.execute(position);
+					ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
+					if(playingImageView!=null){
+						playingImageView.setImageResource(R.drawable.ic_launcher);
+					}
+					imageView.setImageResource(R.drawable.playing);
+					playingImageView = imageView;
+					voiceObject.setCheckedCount(voiceObject.getCheckedCount()+1);
+					voiceObject.getParseObject().saveInBackground();
+				}
 			}
         });
         

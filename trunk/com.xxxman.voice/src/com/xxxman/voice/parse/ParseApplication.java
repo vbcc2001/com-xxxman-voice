@@ -18,15 +18,15 @@ import android.app.Application;
 public class ParseApplication extends Application {
 	
 	//播放列表
-	private List<VoiceObject> voiceObjectList ; 
+	private List<VoiceObject> voiceObjectList = new ArrayList<VoiceObject>(); ; 
 	//当前播放的编号
-	private int currentNumber = 0;
+	private VoiceObject nowPlayingVoiceObject ;
 	//用户登录信息
 	private UserObject userObject ;
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		voiceObjectList = new ArrayList<VoiceObject>();
+
 		//初始化在parse中注册的Application ID 和 Client Key
 		Parse.initialize(this, "7Pl8cPh7yQQQjhblyAyf9Bg7tt4H0Sm5OvDAAW14", "H7XGAaNHogyuYvDxXGBlkUqmQbmCEtgR2c0Ql62M");
 		//默认用户登录
@@ -86,17 +86,17 @@ public class ParseApplication extends Application {
 	public  void setVoiceObjectList(List<VoiceObject> voiceObjectList) {
 		this.voiceObjectList = voiceObjectList;
 	}
-	/*
-	 * 当前播放的编号
+	/**
+	 * 当前播放的声音对象
 	 */
-	public  int getCurrentNumber() {
-		return currentNumber;
+	public VoiceObject getNowPlayingVoiceObject() {
+		return nowPlayingVoiceObject;
 	}
 	/**
-	 * 当前播放的编号
+	 * 当前播放的声音对象
 	 * @param currentNumber
 	 */
-	public  void setCurrentNumber(int currentNumber) {
-		this.currentNumber = currentNumber;
+	public void setNowPlayingVoiceObject(VoiceObject nowPlayingVoiceObject) {
+		this.nowPlayingVoiceObject = nowPlayingVoiceObject;
 	}
 }

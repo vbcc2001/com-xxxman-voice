@@ -10,6 +10,5 @@
     <string name="title_list_item_type_left_half">[</string>
     <string name="title_list_item_type_right_harf">]</string>
     <string name="title_list_item_checked">点击:</string>
-    <string name="title_activity_voice_player">VoicePlayerActivity</string>
-
+    
 </resources>

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 /**
@@ -79,17 +80,13 @@ public class ListViewAdapter extends BaseAdapter  {
 		title_list_item_checked.setText(context.getString(R.string.title_list_item_checked)+item.getCheckedCount());
 		title_list_item_date.setText(context.getString(R.string.title_list_item_date)+item.getCreateDateString());
 		view.setTag(position);
-//		view.setOnClickListener(new OnClickListener() {
-//			public void onClick(View v) {
-//				ParseApplication a= (ParseApplication)context.getApplicationContext();
-//				a.getVoiceObjectList().add(item);
-//				a.setCurrentNumber(a.getVoiceObjectList().size());
-////			    Bundle bundle = new Bundle();
-//			    Intent intent = new Intent(context,VoicePlayerService.class);
-////			    intent.putExtras(bundle);
-//			    context.startService(intent);
-//			}
-//		});
+		ImageView title_list_item_imageView = (ImageView) view.findViewById(R.id.title_list_item_imageView);
+		ParseApplication app= (ParseApplication)context.getApplicationContext();
+		if(item.equals(app.getNowPlayingVoiceObject())){
+			title_list_item_imageView.setImageResource(R.drawable.playing);
+		}else{
+			title_list_item_imageView.setImageResource(R.drawable.ic_launcher);
+		}
 		return view;
 	}
 
