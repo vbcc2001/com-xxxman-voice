@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.0.14.min.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 </head>
 
 <body>
@@ -42,107 +43,19 @@
 
   <script type="text/javascript">
     Parse.initialize("7Pl8cPh7yQQQjhblyAyf9Bg7tt4H0Sm5OvDAAW14", "06y5lCIkE4DkLJn7wssROZda5fw6erdTxiixKnM2");
-	
-	var voiceObject = Parse.Object.extend("VoiceObject");
-	var query = new Parse.Query(voiceObject);
+	var voiceObjectList ;
+	var VoiceObject = Parse.Object.extend("VoiceObject");
+	var query = new Parse.Query(VoiceObject);
 	query.find({
 	  success: function(results) {
 		alert("查询成功,共 " + results.length + " 条.");
+		voiceObjectList = results;
 		createTable(results);
 	  },
 	  error: function(error) {
 		alert("Error: " + error.code + " " + error.message);
 	  }
 	});
-	
-	function createTable(results)
-	{ 
-		var table=$("<table border=\"1\">");
-		table.appendTo($("#main"));
-		var tr=$("<tr></tr>");
-		tr.appendTo(table);
-
-		var th=$("<th>编号</th>");
-		th.appendTo(tr);	
-		var th=$("<th>标题</th>");
-		th.appendTo(tr);
-		var th=$("<th>类型</th>");
-		th.appendTo(tr);
-		var th=$("<th>uri</th>");
-		th.appendTo(tr);
-		var th=$("<th>点击数</th>");
-		th.appendTo(tr);		
-		for(var i=0;i<results.length;i++)
-		{
-			var tr=$("<tr></tr>");
-			tr.appendTo(table);
-
-			var td=$("<td>"+i+"</td>");
-			td.appendTo(tr);	
-
-			var td=$("<td></td>");
-			var input = $("<input size='30' type='text' value='"+results[i].get("title")+"'/>")
-			input.appendTo(td);
-			td.appendTo(tr);
-
-			var td=$("<td></td>");
-			var input = $("<input size='10' type='text' value='"+results[i].get("type")+"'/>")
-			input.appendTo(td);
-			td.appendTo(tr);
-
-			var td=$("<td></td>");
-			var input = $("<input size='100' type='text' value='"+results[i].get("uri")+"'/>")
-			input.appendTo(td);
-			td.appendTo(tr);
-
-			var td=$("<td></td>");
-			var input = $("<input size='6' type='text' value='"+results[i].get("checkedCount")+"'/>")
-			input.appendTo(td);
-			td.appendTo(tr);
-		}
-		trend.appendTo(table);
-		$("#main").append("</table>");
-	}
-	
-	/**
-    var TestObject = Parse.Object.extend("TestObject");
-    var testObject = new TestObject();
-      testObject.save({foo: "bar"}, {
-      success: function(object) {
-        $(".success").show();
-      },
-      error: function(model, error) {
-        $(".error").show();
-      }
-    });
-	**/
-	
-
-	function signUp(){
-		var user = new Parse.User();
-		user.set("username", $("#username").val());
-		user.set("password", $("#password").val());
-		user.set("email", $("#email").val());
-
-		user.signUp(null, {
-		  success: function(user) {
-			alert("注册成功");
-		  },
-		  error: function(user, error) {
-			alert("Error: " + error.code + " " + error.message);
-		  }
-		});
-	}
-	function login(){
-		Parse.User.logIn($("#username").val(), $("#password").val(), {
-		  success: function(user) {
-			alert("登录成功");
-		  },
-		  error: function(user, error) {
-			alert("Error: " + error.code + " " + error.message);
-		  }
-		});	
-	}	
   </script>
 </body>
 
