@@ -10,6 +10,7 @@ import com.parse.ParseException;
 import com.parse.ParseRole;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.xxxman.voice.R;
 import com.xxxman.voice.object.UserObject;
 import com.xxxman.voice.object.VoiceObject;
 
@@ -28,7 +29,7 @@ public class ParseApplication extends Application {
 		super.onCreate();
 
 		//初始化在parse中注册的Application ID 和 Client Key
-		Parse.initialize(this, "7Pl8cPh7yQQQjhblyAyf9Bg7tt4H0Sm5OvDAAW14", "H7XGAaNHogyuYvDxXGBlkUqmQbmCEtgR2c0Ql62M");
+		Parse.initialize(this, this.getString(R.string.parse_application_id),this.getString(R.string.parse_client_Key));
 		//默认用户登录
 		ParseUser.logInInBackground("guest", "guest", new LogInCallback() {
 			@Override

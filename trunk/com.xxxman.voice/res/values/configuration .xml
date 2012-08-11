@@ -1,0 +1,6 @@
+<resources>
+	<!-- 在parse中注册的Application ID -->
+    <string name="parse_application_id">7Pl8cPh7yQQQjhblyAyf9Bg7tt4H0Sm5OvDAAW14</string>
+   	<!-- 在parse中注册的client_key -->
+    <string name="parse_client_Key">H7XGAaNHogyuYvDxXGBlkUqmQbmCEtgR2c0Ql62M</string>    
+</resources>
