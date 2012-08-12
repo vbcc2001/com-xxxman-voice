@@ -34,28 +34,21 @@
 	  </tr>	  
 	</table>
   </div>
-  <div id="login">
+  <div id="type">
   </div>
   <div id="main">
-	<table border="1" id="table_voiceObject">
-	</table>
   </div>
 
   <script type="text/javascript">
     Parse.initialize("7Pl8cPh7yQQQjhblyAyf9Bg7tt4H0Sm5OvDAAW14", "06y5lCIkE4DkLJn7wssROZda5fw6erdTxiixKnM2");
 	var voiceObjectList ;
+	var voiceTypeList ;
 	var VoiceObject = Parse.Object.extend("VoiceObject");
-	var query = new Parse.Query(VoiceObject);
-	query.find({
-	  success: function(results) {
-		alert("查询成功,共 " + results.length + " 条.");
-		voiceObjectList = results;
-		createTable(results);
-	  },
-	  error: function(error) {
-		alert("Error: " + error.code + " " + error.message);
-	  }
-	});
+	var Dict = Parse.Object.extend("Dict");
+	findVoiceObjectList();
+	findVoiceTypeList();
+	
+
   </script>
 </body>
 
