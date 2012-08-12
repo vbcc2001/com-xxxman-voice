@@ -12,6 +12,15 @@ body {
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
 }
+#type {
+    width: 1500px;
+    margin: auto;
+    text-align: center;
+    background: white;
+    padding: 50px 60px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
+}
 #main {
     width: 1500px;
     margin: auto;
