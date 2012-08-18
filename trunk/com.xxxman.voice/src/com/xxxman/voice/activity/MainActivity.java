@@ -15,7 +15,6 @@ import com.xxxman.voice.parse.ParseApplication;
 import com.xxxman.voice.service.VoicePlayerService;
 import com.xxxman.voice.service.VoicePlayerService.VBinder;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.app.Activity;
@@ -32,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 /**
  * 主界面
- * @author kkkaiser 20120724
+ * @author xxxman 20120724
  *
  */
 public class MainActivity extends Activity  {
@@ -48,6 +47,7 @@ public class MainActivity extends Activity  {
     private ParseApplication app = null ;
     //当前播放的Item的imageView
     private ImageView playingImageView = null;
+    
 	private ServiceConnection serviceConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -56,6 +56,43 @@ public class MainActivity extends Activity  {
         }
 		public void onServiceDisconnected(ComponentName name) {
 			voicePlayerService = null ;
+		}
+    };
+    /*
+     * 设置列表视图每列的单击监听:
+     * 1 点击后,将声音对象放到全局播放类表中,
+     * 2 设定为当前播放编号设置为最后的声音对象,
+     * 3 通过异步任务播放声音对象
+     */  
+    private OnItemClickListener onItemClickListener = new OnItemClickListener(){
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			VoiceObject voiceObject = voiceObjectlist.get(position);
+			app.getVoiceObjectList().add(voiceObject);
+			//当对象不是当前播放的声音对象时候
+			if(voiceObject.equals(app.getNowPlayingVoiceObject())){
+				if(voicePlayerService.isPlaying()){
+					voicePlayerService.pause();
+					ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
+					imageView.setImageResource(R.drawable.pause);
+				}else {
+					voicePlayerService.start();
+					ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
+					imageView.setImageResource(R.drawable.playing);						
+				}
+			}else{
+				app.setNowPlayingVoiceObject(voiceObject);
+				VoicePlayAsyncTask task = new VoicePlayAsyncTask(voicePlayerService,voiceObject);
+				task.execute(position);
+				ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
+				if(playingImageView!=null){
+					playingImageView.setImageResource(R.drawable.ic_launcher);
+				}
+				imageView.setImageResource(R.drawable.playing);
+				playingImageView = imageView;
+				voiceObject.setCheckedCount(voiceObject.getCheckedCount()+1);
+				voiceObject.getParseObject().saveInBackground();
+			}
 		}
     };
     /**
@@ -69,48 +106,13 @@ public class MainActivity extends Activity  {
         //自定义标题栏
         Window window = getWindow();
         if(isCustom){
-        	window.setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.titlebar);
+        	window.setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.title_bar);
         }
         app = (ParseApplication) getApplication();
         //获得主视图上的列表视图
         listView = (ListView) findViewById(R.id.listView);
-        /*
-         * 设置列表视图每列的单击监听:
-         * 1 点击后,将声音对象放到全局播放类表中,
-         * 2 设定为当前播放编号设置为最后的声音对象,
-         * 3 通过异步任务播放声音对象
-         */     
-        listView.setOnItemClickListener(new OnItemClickListener(){
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-				VoiceObject voiceObject = voiceObjectlist.get(position);
-				app.getVoiceObjectList().add(voiceObject);
-				//当对象不是当前播放的声音对象时候
-				if(voiceObject.equals(app.getNowPlayingVoiceObject())){
-					if(voicePlayerService.isPlaying()){
-						voicePlayerService.pause();
-						ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
-						imageView.setImageResource(R.drawable.pause);
-					}else {
-						voicePlayerService.start();
-						ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
-						imageView.setImageResource(R.drawable.playing);						
-					}
-				}else{
-					app.setNowPlayingVoiceObject(voiceObject);
-					VoicePlayAsyncTask task = new VoicePlayAsyncTask(voicePlayerService,voiceObject);
-					task.execute(position);
-					ImageView imageView = (ImageView)view.findViewById(R.id.title_list_item_imageView);
-					if(playingImageView!=null){
-						playingImageView.setImageResource(R.drawable.ic_launcher);
-					}
-					imageView.setImageResource(R.drawable.playing);
-					playingImageView = imageView;
-					voiceObject.setCheckedCount(voiceObject.getCheckedCount()+1);
-					voiceObject.getParseObject().saveInBackground();
-				}
-			}
-        });
+        //设置列表视图每列的单击监听:     
+        listView.setOnItemClickListener(onItemClickListener);
         initListView();
         initService();
     }
