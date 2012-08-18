@@ -20,7 +20,7 @@ public class VoicePlayerActivity extends Activity {
         final boolean isCustom = requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_voice_player);
         Window mWindow = getWindow();
-        mWindow.setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.titlebar);
+        mWindow.setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.title_bar);
 
     }
 

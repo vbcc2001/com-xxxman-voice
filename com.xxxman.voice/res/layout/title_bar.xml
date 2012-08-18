@@ -4,6 +4,21 @@
     android:layout_height="fill_parent"
     android:background="#f00"
     android:orientation="horizontal" >
+    <fragment
+        android:id="@+id/titles_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        class="com.xxxman.voice.activity.TitlesFragment"
+        android:background="#00550033" />
+  
+<!--
+    <fragment
+        android:id="@+id/titles_fragment"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        class=".activity.TitlesFragment"
+        android:background="#00550033" /> 
 	<TextView
 	    android:id="@+id/textView1"
 	    android:padding="5dp"
@@ -25,7 +40,7 @@
         android:layout_height="wrap_content"
         android:text="类型3"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+  --> 
 
 
 
